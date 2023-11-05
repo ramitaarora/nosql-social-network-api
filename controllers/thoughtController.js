@@ -66,9 +66,15 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err);
         }
-    }
+    },
 
     // POST to create a reaction stored in a single thought's reactions array field
+    async createReaction(req, res) {
+
+    },
 
     // DELETE to pull and remove a reaction by the reaction's reactionId value
+    async deleteReaction(req, res) {
+
+    }
 }
