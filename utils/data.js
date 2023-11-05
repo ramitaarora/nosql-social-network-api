@@ -1,4 +1,4 @@
-data = [
+users = [
     {
         "username": "ramita",
         "email": "ramita@example.com"
@@ -12,3 +12,5 @@ data = [
         "email": "rajul@example.com"
     }
 ]
+
+module.exports = users;

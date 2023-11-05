@@ -1,5 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
+const users = require('./data');
 
 connection.once('open', async () => {
     console.log('connected');
@@ -13,6 +14,8 @@ connection.once('open', async () => {
       if (thoughtCheck.length) {
         await connection.dropCollection('thoughts');
       }
+
+    await User.collection.insertMany(users);
   
     // Log out the seed data to indicate what should appear in the database
     console.table(students);
