@@ -73,7 +73,13 @@ module.exports = {
             const friend = await User.updateOne(
                 { _id: req.params.userId},
                 { $push: {friends: [req.params.friendId]}},
-                { runValidators: true, new: true}
+                { runValidators: true, new: true }
+            )
+
+            const otherFriend = await User.updateOne(
+                { _id: req.params.friendId },
+                { $push: {friends: [req.params.userId]}},
+                { runValidators: true, new: true }
             )
             res.json(friend);
         } catch (err) {
@@ -88,7 +94,13 @@ module.exports = {
             const friend = await User.updateOne(
                 { _id: req.params.userId },
                 { $pullAll: {friends: [req.params.friendId]} },
-                { new: true}
+                { new: true }
+            )
+
+            const otherFriend = await User.updateOne(
+                { _id: req.params.friendId },
+                { $pullAll: {friends: [req.params.userId]} },
+                { new: true }
             )
             res.json({ message: 'Friend deleted.' })
         } catch (err) {

@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
     // GET to get all thoughts
@@ -31,7 +31,12 @@ module.exports = {
     async createThought(req, res) {
         try {
             const thought = await Thought.create(req.body);
-            res.json(thought);
+            const user = await User.updateOne(
+                { username: thought.username },
+                { $push: { thoughts: [thought._id]}},
+                { runValidators: true, new: true}
+            )
+            res.json({message: 'Thought created!'});
         } catch (err) {
             res.status(500).json(err);
         }
@@ -62,6 +67,12 @@ module.exports = {
             if (!thought) {
                 res.status(404).json({ message: 'No thought with this ID'});
             }
+            console.log(thought);
+            const user = await User.updateOne(
+                { username: thought.username },
+                { $pullAll: {thoughts: [req.params.thoughtId]} },
+                { new: true }
+            )
             res.json({ message: 'Thought deleted.'});
         } catch (err) {
             res.status(500).json(err);
@@ -99,6 +110,7 @@ module.exports = {
             if (!reaction) {
                 res.status(404).json({ message: 'No thoughts with that ID'});
             }
+
             res.json(reaction);
         } catch (err) {
             res.status(500).json(err);

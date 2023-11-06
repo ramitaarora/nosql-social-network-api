@@ -12,10 +12,11 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAt) => createdAt.toLocalTimeString('en-US'),
+            get: (createdAt) => `${createdAt.toLocaleDateString('en-US')} at ${createdAt.toLocaleTimeString('en-US')}`,
         },
         username: {
-            type: Schema.Types.ObjectId,
+            type: String,
+            required: true,
             ref: 'user',
         },
         reactions: [reactionSchema]
@@ -25,12 +26,13 @@ const thoughtSchema = new Schema(
           virtuals: true,
           getters: true,
         },
+        id: false,
     }
 );
 
 thoughtSchema.virtual('reactionCount')
 .get(() => {
-    return this.reactions.length;
+    return this.reactions? this.reactions.length : 0;
 });
 
 const Thought = model('thought', thoughtSchema);
