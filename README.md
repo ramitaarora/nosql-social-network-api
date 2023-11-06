@@ -20,7 +20,7 @@ To start, run `npm start`.
 
 ## Usage
 
-The video can be viewed at:
+The video can be viewed at: https://drive.google.com/file/d/1jJaBTAZYweVIpIp6tO2_u139682KrrzV/view
 
 <img src="./app-screenshot.png" alt="screenshot"/>
 
