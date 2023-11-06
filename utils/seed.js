@@ -18,7 +18,7 @@ connection.once('open', async () => {
     await User.collection.insertMany(users);
   
     // Log out the seed data to indicate what should appear in the database
-    console.table(students);
+    console.table(users);
     console.info('Seeding complete! 🌱');
     process.exit(0);
   });
