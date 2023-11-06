@@ -18,7 +18,7 @@ module.exports = {
                 .select('-__v');
             
                 if (!user) {
-                    res.status(404).json({ message: 'No user found with that ID'})
+                    return res.status(404).json({ message: 'No user found with that ID'})
                 }
 
                 res.json({user});
@@ -58,7 +58,7 @@ module.exports = {
             const user = await User.findOneAndDelete({ _id: req.params.userId});
 
             if (!user) {
-                res.status(404).json({ message: 'No user found with that ID'});
+                return res.status(404).json({ message: 'No user found with that ID'});
             }
             res.json({ message: 'User deleted.' });
         } catch (err) {

@@ -18,7 +18,7 @@ module.exports = {
                 .select('-__v');
             
             if (!thoughts) {
-                res.status(404).json({ message: 'No thoughts with that ID'});
+                return res.status(404).json({ message: 'No thoughts with that ID'});
             }
 
             res.json(thoughts);
@@ -94,7 +94,7 @@ module.exports = {
                 { runValidators: true, new: true}
             );
             if (!reaction) {
-                res.status(404).json({ message: 'No thoughts with that ID'});
+                return res.status(404).json({ message: 'No thoughts with that ID'});
             }
             res.json(reaction);
         } catch (err) {
@@ -106,16 +106,16 @@ module.exports = {
     // DELETE to pull and remove a reaction by the reaction's reactionId value
     async deleteReaction(req, res) {
         try {
-            const getReactionId = await Thought.findOne({ _id: req.params.thoughtId});
-            let returnedReactionId = getReactionId.reactions.map(item => item.reactionId);
+            // const getReactionId = await Thought.findOne({ _id: req.params.thoughtId});
+            // let returnedReactionId = getReactionId.reactions.map(item => item.reactionId);
 
             const reaction = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId},
-                { $pullAll: { reactions: returnedReactionId}},
+                { $pull: { reactions: {reactionId: req.body.reactionId}}},
                 { new: true }
             );
             if (!reaction) {
-                res.status(404).json({ message: 'No thoughts with that ID'});
+                return res.status(404).json({ message: 'No thoughts with that ID'});
             }
 
             res.json(reaction);
