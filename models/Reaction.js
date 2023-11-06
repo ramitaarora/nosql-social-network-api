@@ -18,14 +18,14 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAt) => createdAt.toLocalTimeString('en-US'),        
+            get: (createdAt) => `${createdAt.toLocaleDateString('en-US')} at ${createdAt.toLocaleTimeString('en-US')}`,        
         }
     },
     {
         toJSON: {
           getters: true,
         },
-        id: false,
+        _id: false,
     }
 )
 
